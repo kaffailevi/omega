@@ -13,21 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.PushBuilder;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.zip.DataFormatException;
-
 import static com.msglearning.javabackend.controllers.ControllerConstants.*;
 
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_BORROW})
 public class BorrowController {
-
-
-
 
     private static final String ALL_PATH = "/all";
 
@@ -38,45 +33,12 @@ public class BorrowController {
 
     private static final String LOAN_BETWEEN_PATH = "/loan_between/{startDate}/{endDate}";
 
+    private static final String RETURN_DATE_LESS_THAN_PATH = "/return_date_less_than/{reffDate}";
+
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
     // private static final LocalDate RETURN_DATE = LocalDate.parse("/return_date/{localdate}");
 
-    private static LocalDate checkDate(String date) throws DataFormatException
-    {
-        String[] tmp = date.trim().split("-");
-        Integer year =1;
-        Integer month=1;
-        Integer day=1;
-        try {
-
-            switch (tmp.length) {
-                case 1: {
-                    year = Integer.parseInt(tmp[0]);
-                    break;
-                }
-                case 2: {
-                    year = Integer.parseInt(tmp[0]);
-                    month = Integer.parseInt(tmp[1]);
-                    break;
-                }
-                case 3: {
-                    year = Integer.parseInt(tmp[0]);
-                    month = Integer.parseInt(tmp[1]);
-                    day = Integer.parseInt(tmp[2]);
-                    break;
-                }
-                default:
-                    throw new DataFormatException("INVALID DATE FORMAT");
-            }
-        }
-        catch (Exception e)
-        {
-            throw new DataFormatException("INVALID DATE FORMAT");
-        }
-
-        return LocalDate.of(year,month,day);
-    }
 
     @Autowired
     private BorrowService borrowService;
@@ -101,21 +63,25 @@ public class BorrowController {
     // You should use that way: http://localhost:8080/java-api/api/borrow/loan_between/2023-06-01/2023-06-17
     // Important that you must use '-' to separate the year, month, day
     @GetMapping(LOAN_BETWEEN_PATH)
-    public List<BorrowTO> findByLoanDateBetween(@PathVariable String startDate, @PathVariable String endDate) throws DataFormatException {
+    public List<BorrowTO> getByLoanDateBetween(@PathVariable String startDate, @PathVariable String endDate) {
 
         String[] temp1 = startDate.split("-");
         String[] temp2 = endDate.split("-");
-        LocalDate sd;
-        LocalDate ed;
-        try{
-            sd = checkDate(startDate);
-            ed = checkDate(endDate);
-            return borrowService.findByLoanDateBetween(sd,ed);
-        }
-        catch (DataFormatException e)
-        {
-            throw new DataFormatException(e.getMessage());
-        }
+
+        LocalDate sd = LocalDate.of(Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1]), Integer.parseInt(temp1[2]));
+        LocalDate ed = LocalDate.of(Integer.parseInt(temp2[0]), Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]));
+
+        return borrowService.findByLoanDateBetween(sd,ed);
     }
-    //TODO: POST + PUT mapping methods
+
+    // You should use that way: http://localhost:8080/java-api/api/borrow/return_date_less_than/{{reffDate}}
+    @GetMapping(RETURN_DATE_LESS_THAN_PATH)
+    public List<BorrowTO> getAllByReturnDateLessThan(@PathVariable String reffDate) {
+
+        String[] temp1 = reffDate.split("-");
+
+        LocalDate refDate = LocalDate.of(Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1]), Integer.parseInt(temp1[2]));
+
+        return borrowService.findAllByReturnDateLessThan(refDate);
+    }
 }
