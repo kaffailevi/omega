@@ -25,8 +25,9 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     @Query( "SELECT b FROM Borrow b where b.book.id = :bookId")
     List<Borrow> findAllByBookId(@Param("bookId") Long bookId);
 
-   // List<Borrow> findAllByBorrowDateBetween(SimpleDateFormat startDate, SimpleDateFormat endDate);
+    @Query("SELECT b FROM Borrow b where b.loanDate >= :startDate and b.loanDate <= :endDate")
+    List<Borrow> findAllByLoanDateBetween(@Param("startDate") LocalDate startDate,@Param("endDate") LocalDate endDate);
 
-    List<Borrow> findAllByReturnDateIsNull();
+    List<Borrow> findAllByReturnDate();
 
 }
