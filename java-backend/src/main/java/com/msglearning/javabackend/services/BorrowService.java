@@ -1,8 +1,10 @@
 package com.msglearning.javabackend.services;
 
 
+import com.msglearning.javabackend.converters.BorrowConverter;
 import com.msglearning.javabackend.entity.Borrow;
 import com.msglearning.javabackend.repositories.BorrowRepository;
+import com.msglearning.javabackend.to.BorrowTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,14 @@ public class BorrowService {
         return borrowRepository.save(borrow);
     }
 
-    public List<Borrow> findAll(){
+    public List<BorrowTO> findAll(){
         List<Borrow> borrows = borrowRepository.findAll();
                 if (borrows.isEmpty())
                     return Collections.emptyList();
 
-                return borrows.stream().collect(Collectors.toList());
+                return borrows.stream()
+                        .map(BorrowConverter::convertToTO)
+                        .collect(Collectors.toList());
     }
 
 

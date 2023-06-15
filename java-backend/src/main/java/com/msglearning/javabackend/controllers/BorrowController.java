@@ -6,6 +6,7 @@ import com.msglearning.javabackend.exceptions.ItemNotFoundException;
 import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.BorrowService;
 import com.msglearning.javabackend.services.ImageService;
+import com.msglearning.javabackend.to.BorrowTO;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,5 +37,7 @@ public class BorrowController {
     private Environment env;
 
     @GetMapping(ALL_PATH)
-    public List<Borrow> getAll(){return borrowService.findAll();}
+    public List<BorrowTO> getAll() {
+        return borrowService.findAll();
+    }
 }

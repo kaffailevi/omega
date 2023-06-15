@@ -1,12 +1,10 @@
 package com.msglearning.javabackend.entity;
 
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +18,6 @@ import lombok.NoArgsConstructor;
 public class Borrow {
     static final String TABLE_NAME = "borrows";
 
-    @Column
-    private SimpleDateFormat borrowDate;
-    @Column
-    private SimpleDateFormat returnDate;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +30,9 @@ public class Borrow {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-
+    @Column
+    private SimpleDateFormat loanDate;
+    @Column
+    private SimpleDateFormat returnDate;
 
 }
