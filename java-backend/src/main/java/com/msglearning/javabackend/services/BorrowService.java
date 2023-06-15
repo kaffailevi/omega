@@ -4,6 +4,7 @@ package com.msglearning.javabackend.services;
 import com.msglearning.javabackend.converters.BorrowConverter;
 import com.msglearning.javabackend.entity.Borrow;
 import com.msglearning.javabackend.repositories.BorrowRepository;
+import com.msglearning.javabackend.to.BookTO;
 import com.msglearning.javabackend.to.BorrowTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,14 @@ public class BorrowService {
 
     public List<BorrowTO> findByLoanDateBetween(LocalDate startDate, LocalDate endDate) {
         List<Borrow> borrows = borrowRepository.findAllByLoanDateBetween(startDate,endDate);
+
+        return borrows.stream()
+                .map(BorrowConverter::convertToTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<BorrowTO> findAllByReturnDateLessThan(LocalDate reffDate) {
+        List<Borrow> borrows = borrowRepository.findAllByReturnDateLessThan(reffDate);
 
         return borrows.stream()
                 .map(BorrowConverter::convertToTO)

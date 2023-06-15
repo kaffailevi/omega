@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.PushBuilder;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +32,8 @@ public class BorrowController {
     private static final String ALL_BY_BOOK_ID_PATH = "/all_by_bookid/{id}";
 
     private static final String LOAN_BETWEEN_PATH = "/loan_between/{startDate}/{endDate}";
+
+    private static final String RETURN_DATE_LESS_THAN_PATH = "/return_date_less_than/{reffDate}";
 
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
@@ -60,7 +63,7 @@ public class BorrowController {
     // You should use that way: http://localhost:8080/java-api/api/borrow/loan_between/2023-06-01/2023-06-17
     // Important that you must use '-' to separate the year, month, day
     @GetMapping(LOAN_BETWEEN_PATH)
-    public List<BorrowTO> findByLoanDateBetween(@PathVariable String startDate, @PathVariable String endDate) {
+    public List<BorrowTO> getByLoanDateBetween(@PathVariable String startDate, @PathVariable String endDate) {
 
         String[] temp1 = startDate.split("-");
         String[] temp2 = endDate.split("-");
@@ -69,5 +72,16 @@ public class BorrowController {
         LocalDate ed = LocalDate.of(Integer.parseInt(temp2[0]), Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]));
 
         return borrowService.findByLoanDateBetween(sd,ed);
+    }
+
+    // You should use that way: http://localhost:8080/java-api/api/borrow/return_date_less_than/{{reffDate}}
+    @GetMapping(RETURN_DATE_LESS_THAN_PATH)
+    public List<BorrowTO> getAllByReturnDateLessThan(@PathVariable String reffDate) {
+
+        String[] temp1 = reffDate.split("-");
+
+        LocalDate refDate = LocalDate.of(Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1]), Integer.parseInt(temp1[2]));
+
+        return borrowService.findAllByReturnDateLessThan(refDate);
     }
 }
