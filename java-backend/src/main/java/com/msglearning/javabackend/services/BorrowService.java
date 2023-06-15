@@ -8,6 +8,7 @@ import com.msglearning.javabackend.to.BorrowTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,14 @@ public class BorrowService {
     public List<BorrowTO> findByBookId(Long bookId) {
         List<Borrow> books = borrowRepository.findAllByBookId(bookId);
         return books.stream()
+                .map(BorrowConverter::convertToTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<BorrowTO> findByLoanDateBetween(LocalDate startDate, LocalDate endDate) {
+        List<Borrow> borrows = borrowRepository.findAllByLoanDateBetween(startDate,endDate);
+
+        return borrows.stream()
                 .map(BorrowConverter::convertToTO)
                 .collect(Collectors.toList());
     }

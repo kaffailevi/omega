@@ -28,6 +28,6 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     @Query("SELECT b FROM Borrow b where b.loanDate >= :startDate and b.loanDate <= :endDate")
     List<Borrow> findAllByLoanDateBetween(@Param("startDate") LocalDate startDate,@Param("endDate") LocalDate endDate);
 
-    List<Borrow> findAllByReturnDate();
+    //List<Borrow> findAllByReturnDate();
 
 }
