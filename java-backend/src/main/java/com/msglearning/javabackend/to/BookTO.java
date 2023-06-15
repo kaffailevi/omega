@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class BookTO {
 
-
     private Long id;
 
     private String title;
