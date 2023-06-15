@@ -16,7 +16,6 @@ import java.util.Optional;
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
 
-
     List<Borrow> findAll();
 
     @Query( "SELECT b FROM Borrow b where b.user.id = :userId")
