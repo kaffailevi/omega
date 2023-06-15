@@ -1,7 +1,9 @@
 package com.msglearning.javabackend.services;
 
+import com.msglearning.javabackend.converters.BookConverter;
 import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.repositories.BookRepository;
+import com.msglearning.javabackend.to.BookTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,12 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public List<Book> findAll() {
+    public List<BookTO> findAll() {
         List<Book> books = bookRepository.findAll();
         if (books.isEmpty())
             return Collections.emptyList();
 
-        return books.stream().collect(Collectors.toList());
+        return books.stream().map(BookConverter::convertToTO).collect(Collectors.toList());
     }
 
     public List<Book> findByAuthor(String author)

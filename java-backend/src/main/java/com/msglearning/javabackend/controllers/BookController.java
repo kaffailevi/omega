@@ -4,6 +4,7 @@ import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.exceptions.ItemNotFoundException;
 import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.ImageService;
+import com.msglearning.javabackend.to.BookTO;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,7 +35,7 @@ public class BookController {
     private Environment env;
 
     @GetMapping(ALL_PATH)
-    public List<Book> getAll() {
+    public List<BookTO> getAll() {
         return bookService.findAll();
     }
 
