@@ -6,6 +6,9 @@ public class ControllerConstants {
     public static final String API_PATH_USER = API_PATH + "/user";
     public static final String API_PATH_AUTH = API_PATH + "/auth";
     public static final String  API_PATH_BOOK = API_PATH + "/book";
+    public static final String  API_PATH_BORROW = API_PATH + "/borrow";
+
+
 
     //Messages
     public static final String NOT_FOUND_MESSAGE = "RECORD NOT FOUND";

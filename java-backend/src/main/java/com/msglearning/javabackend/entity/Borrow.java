@@ -20,6 +20,12 @@ import lombok.NoArgsConstructor;
 public class Borrow {
     static final String TABLE_NAME = "borrow";
 
+    @Column
+    private SimpleDateFormat borrowDate;
+    @Column
+    private SimpleDateFormat returnDate;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,48 +38,6 @@ public class Borrow {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    @Column
-    private SimpleDateFormat borrowDate;
-    @Column
-    private SimpleDateFormat returnDate;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-/*
-    public LocalDate getBorrowDate() {
-        return borrowDate;
-    }
-
-    public void setBorrowDate(LocalDate borrowDate) {
-        this.borrowDate = borrowDate;
-    }
-
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }*/
 }

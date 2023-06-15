@@ -59,4 +59,7 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Stuff> stuffList;
 
+    @OneToMany(mappedBy = "user")
+    private List<Borrow> borrowList;
+
 }

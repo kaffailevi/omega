@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +29,8 @@ public class Book {
     private String coverImage;
     @Column
     private Double rating;
+
+    @OneToMany(mappedBy = "book")
+    List<Borrow> borrowList;
 
 }
