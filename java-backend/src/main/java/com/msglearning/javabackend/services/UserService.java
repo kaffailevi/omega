@@ -81,6 +81,7 @@ public class UserService {
 
     }
 
+
     public boolean existsWithName(String name) {
         List<User> allUsers = userRepository.findAll();
 
