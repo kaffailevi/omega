@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = Borrow.TABLE_NAME)
 public class Borrow {
-    static final String TABLE_NAME = "borrow";
+    static final String TABLE_NAME = "borrows";
 
     @Column
     private SimpleDateFormat borrowDate;

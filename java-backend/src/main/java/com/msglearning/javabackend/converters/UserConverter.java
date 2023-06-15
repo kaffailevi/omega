@@ -18,7 +18,7 @@ public class UserConverter {
 
     public static final User convertToEntity(UserCTO to) {
         return new User(to.getId(), to.getPassword(), to.getFirstName(), to.getLastName(), to.getEmail(), to.getPhone(), null, to.getOccupation(), null
-        );
+        ,null);
     }
 
 }
