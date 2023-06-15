@@ -37,5 +37,10 @@ public class BorrowService {
                 .map(BorrowConverter::convertToTO)
                 .collect(Collectors.toList());
     }
-
+    public List<BorrowTO> findByBookId(Long bookId) {
+        List<Borrow> books = borrowRepository.findAllByBookId(bookId);
+        return books.stream()
+                .map(BorrowConverter::convertToTO)
+                .collect(Collectors.toList());
+    }
 }
