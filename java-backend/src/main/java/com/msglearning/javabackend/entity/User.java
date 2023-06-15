@@ -56,8 +56,6 @@ public class User {
     @Column
     private String occupation;
 
-
-
     @OneToMany(mappedBy = "user")
     private List<Borrow> borrowList;
 

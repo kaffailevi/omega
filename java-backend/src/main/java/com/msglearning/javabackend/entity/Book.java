@@ -20,15 +20,13 @@ public class Book {
     @Column(nullable = false)
     private String title;
     @Column
-    private String subTitle;
+    private String subtitle;
     @Column(nullable = false)
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "coverImage")
-    private String coverImage;
-    @Column
-    private Double rating;
+    @Column(name = "book_cover")
+    private String bookCover;
 
     @OneToMany(mappedBy = "book")
     List<Borrow> borrowList;
