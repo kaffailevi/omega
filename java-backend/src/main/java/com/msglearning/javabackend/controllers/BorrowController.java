@@ -26,6 +26,8 @@ public class BorrowController {
 
     private static final String ID_PATH = "/id/{id}";
 
+    private static final String ALL_BY_USER_ID_PATH = "/all_by_userid/{id}";
+
    // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
    // private static final LocalDate RETURN_DATE = LocalDate.parse("/return_date/{localdate}");
@@ -33,11 +35,18 @@ public class BorrowController {
 
     @Autowired
     private BorrowService borrowService;
-    @Autowired
-    private Environment env;
 
     @GetMapping(ALL_PATH)
     public List<BorrowTO> getAll() {
         return borrowService.findAll();
     }
+
+    @GetMapping(ALL_BY_USER_ID_PATH)
+    public List<BorrowTO> getAllByUserID(@PathVariable Long id)
+    {
+        return borrowService.findByUserId(id);
+    }
+
+
+
 }

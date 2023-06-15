@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,8 +19,8 @@ public class BorrowTO implements Serializable {
 
     private Long bookId;
 
-    private SimpleDateFormat loanDate;
+    private LocalDate loanDate;
 
-    private SimpleDateFormat returnDate;
+    private LocalDate returnDate;
 
 }

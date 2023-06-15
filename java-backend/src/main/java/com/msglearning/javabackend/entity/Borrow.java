@@ -2,12 +2,14 @@ package com.msglearning.javabackend.entity;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
 
 
 @AllArgsConstructor
@@ -31,8 +33,8 @@ public class Borrow {
     private User user;
 
     @Column
-    private SimpleDateFormat loanDate;
+    private LocalDate loanDate;
     @Column
-    private SimpleDateFormat returnDate;
+    private LocalDate returnDate;
 
 }
