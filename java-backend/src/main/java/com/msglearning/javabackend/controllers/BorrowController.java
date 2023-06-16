@@ -55,7 +55,6 @@ public class BorrowController {
         Integer month=1;
         Integer day=1;
         try {
-
             switch (tmp.length) {
                 case 1: {
                     year = Integer.parseInt(tmp[0]);
@@ -128,10 +127,9 @@ public class BorrowController {
     @GetMapping(RETURN_DATE_LESS_THAN_PATH)
     public List<BorrowTO> getAllByReturnDateLessThan(@PathVariable String reffDate) throws DataFormatException{
 
-
         LocalDate refDate = BorrowController.checkDate(reffDate);
-
         return borrowService.findAllByReturnDateLessThan(refDate);
+
     }
 
     @PostMapping(NEW_PATH)
