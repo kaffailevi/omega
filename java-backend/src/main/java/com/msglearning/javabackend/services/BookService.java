@@ -62,8 +62,9 @@ public class BookService {
         //not working because of foreign key constrain
         bookRepository.deleteById(id);}
 
-    public void update (BookTO book){
-        bookRepository.findById(book.getId()).ifPresent(
+    public boolean update (BookTO book){
+        Optional<Book> opBook =  bookRepository.findById(book.getId());
+        opBook.ifPresent(
 
                 updatedBook -> {
                     updatedBook.setTitle(book.getTitle());
@@ -77,6 +78,6 @@ public class BookService {
 
 
         );
-        System.out.println(bookRepository.findById(book.getId()).isPresent());
+    return opBook.isPresent();
     }
 }

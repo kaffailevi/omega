@@ -88,12 +88,8 @@ public class BookController {
 
     @PutMapping(UPDATE_PATH)
     public boolean updateBook(@RequestBody BookTO bookTO){
-        try {
-            bookService.update(bookTO);
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        boolean res = bookService.update(bookTO);
+        System.out.println(res);
+        return res;
     }
 }
