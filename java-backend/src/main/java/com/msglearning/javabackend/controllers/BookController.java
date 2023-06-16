@@ -1,11 +1,9 @@
 package com.msglearning.javabackend.controllers;
 
-import com.msglearning.javabackend.converters.BookConverter;
 import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.exceptions.ItemNotFoundException;
 import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.ImageService;
-import com.msglearning.javabackend.to.BookTO;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,7 +34,7 @@ public class BookController {
     private Environment env;
 
     @GetMapping(ALL_PATH)
-    public List<BookTO> getAll() {
+    public List<Book> getAll() {
         return bookService.findAll();
     }
 
@@ -46,10 +44,10 @@ public class BookController {
     }
 
     @GetMapping(ID_PATH)
-    public BookTO getBookById(@PathVariable Long id) throws ItemNotFoundException {
+    public Book getBookById(@PathVariable Long id) throws ItemNotFoundException {
         Optional<Book> opBook = bookService.findById(id);
         if (opBook.isPresent())
-            return BookConverter.convertToTO(opBook.get());
+            return (opBook.get());
         else throw new ItemNotFoundException(NOT_FOUND_MESSAGE + "id=" + id);
     }
 
