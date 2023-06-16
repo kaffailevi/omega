@@ -1,12 +1,17 @@
 package com.msglearning.javabackend.controllers;
 
+import com.msglearning.javabackend.converters.BookConverter;
+import com.msglearning.javabackend.converters.BorrowConverter;
 import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.entity.Borrow;
+import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.exceptions.ItemNotFoundException;
 import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.BorrowService;
 import com.msglearning.javabackend.services.ImageService;
+import com.msglearning.javabackend.services.UserService;
 import com.msglearning.javabackend.to.BorrowTO;
+import com.msglearning.javabackend.to.UserCTO;
 import org.apache.tomcat.jni.Local;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +41,8 @@ public class BorrowController {
     private static final String LOAN_BETWEEN_PATH = "/loan_between/{startDate}/{endDate}";
 
     private static final String RETURN_DATE_LESS_THAN_PATH = "/return_date_less_than/{reffDate}";
+
+    private static final String NEW_PATH = "/new";
 
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
@@ -80,6 +87,12 @@ public class BorrowController {
     @Autowired
     private BorrowService borrowService;
 
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping(ALL_PATH)
     public List<BorrowTO> getAll() {
         return borrowService.findAll();
@@ -119,5 +132,34 @@ public class BorrowController {
         LocalDate refDate = BorrowController.checkDate(reffDate);
 
         return borrowService.findAllByReturnDateLessThan(refDate);
+    }
+
+    @PostMapping(NEW_PATH)
+    public boolean register(@RequestBody BorrowTO borrowTO){
+
+        Borrow temp = BorrowConverter.convertToEntity(borrowTO);
+
+        Optional<Book> optionalBook = bookService.findById(borrowTO.getBookId());
+        if (optionalBook.isPresent()) {
+            temp.setBook(optionalBook.get());
+        } else {
+            return false;
+        }
+
+        Optional<User> optionalUser = userService.findById(borrowTO.getUserId());
+        if (optionalUser.isPresent()) {
+            temp.setUser(optionalUser.get());
+        } else {
+            return false;
+        }
+
+        try {
+            borrowService.save(temp);
+        } catch (Exception e) {
+            return false;
+        }
+
+
+        return true;
     }
 }

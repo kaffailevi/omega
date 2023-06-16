@@ -19,7 +19,7 @@ public class BorrowService {
     @Autowired
     BorrowRepository borrowRepository;
 
-    public Borrow save(Borrow borrow) throws Exception {
+    public Borrow save(Borrow borrow) {
         return borrowRepository.save(borrow);
     }
 
@@ -61,4 +61,5 @@ public class BorrowService {
                 .map(BorrowConverter::convertToTO)
                 .collect(Collectors.toList());
     }
+
 }
