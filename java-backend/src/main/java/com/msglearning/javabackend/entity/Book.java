@@ -25,8 +25,8 @@ public class Book {
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "cover_image")
-    private String coverImage;
+    @Column(name = "bookCover")
+    private String bookCover;
     @Column(name = "is_available")
     private boolean isAvailable;
     @OneToMany(mappedBy = "book")

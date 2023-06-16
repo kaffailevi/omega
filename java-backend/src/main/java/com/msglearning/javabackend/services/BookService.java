@@ -70,7 +70,7 @@ public class BookService {
                     updatedBook.setSubtitle(book.getSubTitle());
                     updatedBook.setAuthor(book.getAuthor());
                     updatedBook.setAvailable(book.isAvailable());
-                    updatedBook.setCoverImage(book.getCoverImage());
+                    updatedBook.setBookCover(book.getCoverImage());
                     updatedBook.setPublishingHouse(book.getPublishingHouse());
                     bookRepository.save(updatedBook);
                 }
