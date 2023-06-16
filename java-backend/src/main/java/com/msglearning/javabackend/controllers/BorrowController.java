@@ -45,6 +45,8 @@ public class BorrowController {
 
     private static final String DELETE_PATH = "/delete/{id}";
 
+    private static final String UPDATE_PATH = "/update";
+
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
     // private static final LocalDate RETURN_DATE = LocalDate.parse("/return_date/{localdate}");
@@ -164,5 +166,12 @@ public class BorrowController {
     @DeleteMapping(DELETE_PATH)
     public void deleteBorrow(@PathVariable Long id) {
         borrowService.deleteById(id);
+    }
+
+    @PutMapping(UPDATE_PATH)
+    public boolean updateBorrow(@RequestBody BorrowTO borrowTO) {
+        boolean res = borrowService.update(borrowTO);
+        System.out.println(res);
+        return res;
     }
 }

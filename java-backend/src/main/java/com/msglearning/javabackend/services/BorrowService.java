@@ -2,7 +2,9 @@ package com.msglearning.javabackend.services;
 
 
 import com.msglearning.javabackend.converters.BorrowConverter;
+import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.entity.Borrow;
+import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.repositories.BorrowRepository;
 import com.msglearning.javabackend.to.BorrowTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,12 @@ public class BorrowService {
 
     @Autowired
     BorrowRepository borrowRepository;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private UserService userService;
 
     public Borrow save(Borrow borrow) {
 
@@ -67,6 +75,31 @@ public class BorrowService {
         return borrows.stream()
                 .map(BorrowConverter::convertToTO)
                 .collect(Collectors.toList());
+    }
+
+    public boolean update(BorrowTO borrowTO) {
+        Optional<Borrow> optionalBorrow = borrowRepository.findById(borrowTO.getId());
+
+        Optional<User> optionalUser = userService.findById(borrowTO.getUserId());
+        if (!(optionalUser.isPresent())) {
+            return false;
+        }
+
+        Optional<Book> optionalBook = bookService.findById(borrowTO.getBookId());
+        if (!(optionalBook.isPresent())) {
+            return false;
+        }
+
+        optionalBorrow.ifPresent(
+                updateBorrow -> {
+                    updateBorrow.setUser(optionalUser.get());
+                    updateBorrow.setBook(optionalBook.get());
+                    updateBorrow.setLoanDate(borrowTO.getLoanDate());
+                    updateBorrow.setReturnDate(borrowTO.getReturnDate());
+                }
+        );
+
+        return optionalBorrow.isPresent();
     }
 
 }
