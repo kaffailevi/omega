@@ -1,6 +1,5 @@
 package com.msglearning.javabackend.controllers;
 
-import com.msglearning.javabackend.converters.BookConverter;
 import com.msglearning.javabackend.converters.BorrowConverter;
 import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.entity.Borrow;
@@ -43,6 +42,8 @@ public class BorrowController {
     private static final String RETURN_DATE_LESS_THAN_PATH = "/return_date_less_than/{reffDate}";
 
     private static final String NEW_PATH = "/new";
+
+    private static final String DELETE_PATH = "/delete/{id}";
 
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
@@ -158,5 +159,10 @@ public class BorrowController {
         }
 
         return true;
+    }
+
+    @DeleteMapping(DELETE_PATH)
+    public void deleteBorrow(@PathVariable Long id) {
+        borrowService.deleteById(id);
     }
 }
