@@ -4,6 +4,7 @@ import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.exceptions.ItemNotFoundException;
 import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.ImageService;
+import com.msglearning.javabackend.to.BookTO;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,8 +22,11 @@ public class BookController {
     private static final String ALL_PATH = "/all";
     private static final String ID_PATH = "/id/{id}";
     private static final String AUTHOR_PATH = "/author/{name}";
+    private static final String TITLE_PATH = "/title/{title}";
     private static final String SAVE_PATH = "/new";
     private static final String COVER_IMAGE_PATH = "/cover/{id}";
+    private static final String DELETE_PATH = "/delete/{id}";
+    private static final String UPDATE_PATH = "/update";
 
 
     @Autowired
@@ -34,13 +38,18 @@ public class BookController {
     private Environment env;
 
     @GetMapping(ALL_PATH)
-    public List<Book> getAll() {
+    public List<BookTO> getAll() {
         return bookService.findAll();
     }
 
     @GetMapping(AUTHOR_PATH)
     public List<Book> getBooksByAuthor(@PathVariable String name) {
         return bookService.findByAuthor(name);
+    }
+
+    @GetMapping(TITLE_PATH)
+    public List<Book> getBooksByTitle(@PathVariable String title) {
+        return bookService.findByTitle(title);
     }
 
     @GetMapping(ID_PATH)
@@ -62,14 +71,26 @@ public class BookController {
         return imageService.read(coverImageStorageSpace +"\\"+imageNameOpt.get());
     }
     @PostMapping(SAVE_PATH)
-    public boolean saveBook(@RequestBody Book book) {
+    public boolean saveBook(@RequestBody BookTO bookTO) {
         try {
-            bookService.save(book);
+            bookService.save(bookTO);
         } catch (Exception e) {
             return false;
         }
         return true;
     }
 
+    @DeleteMapping(DELETE_PATH)
+    public void deleteBook(@PathVariable Long id){ bookService.deleteById(id); }
 
+    @PutMapping(UPDATE_PATH)
+    public boolean updateBook(@RequestBody BookTO bookTO){
+        try {
+            bookService.update(bookTO);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

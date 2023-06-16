@@ -18,15 +18,14 @@ public class Book {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column
+    @Column(name = "sub_title")
     private String subTitle;
     @Column(nullable = false)
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "coverImage")
+    @Column(name = "cover_image")
     private String coverImage;
-    @Column
-    private Double rating;
-
+    @Column(name = "is_available")
+    private boolean isAvailable;
 }
