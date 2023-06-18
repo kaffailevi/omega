@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @Data
 public class RatingTO implements Serializable {
@@ -25,6 +27,6 @@ public class RatingTO implements Serializable {
 
     private String review;
 
-    //?private LocalDate date;
+    private LocalDate date;
 
 }

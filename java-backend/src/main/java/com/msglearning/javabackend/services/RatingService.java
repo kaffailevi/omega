@@ -48,6 +48,9 @@ public class RatingService {
         if(!validateReview(rating.getReview())){
             return true;
         }
+        if(!validateDate(rating.getDate())){
+            return true;
+        }
         ratingRepository.save(rating);
         return true;
     }
@@ -57,12 +60,9 @@ public class RatingService {
     private Boolean validateBook(Book book) {
         return book != null;
     }
-    /*private Boolean validateDate(LocalDate date) {
+    private Boolean validateDate(LocalDate date) {
         return date != null;
     }
-    private Boolean validateBorrow(Borrow borrow){
-        return borrow != null;
-    */
     private Boolean validateRating(RatingEnum rating) {
         return false;
     }

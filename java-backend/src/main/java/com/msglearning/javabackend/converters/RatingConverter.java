@@ -11,7 +11,8 @@ public class RatingConverter {
                 entity.getUser().getId(),
                 entity.getRating(),
                 entity.getReview_title(),
-                entity.getReview()
+                entity.getReview(),
+                entity.getDate()
         );
     }
     public static final Rating convertToEntity(RatingTO ratingTO){
@@ -19,8 +20,8 @@ public class RatingConverter {
                 ratingTO.getId(),
                 ratingTO.getRating(),
                 ratingTO.getReview_title(),
-                ratingTO.getReview()
-                //ratingTO.getDate(),
+                ratingTO.getReview(),
+                ratingTO.getDate()
                 );
     }
 
