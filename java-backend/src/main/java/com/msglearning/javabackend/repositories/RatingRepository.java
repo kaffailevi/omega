@@ -8,14 +8,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.DoubleStream;
 
 @Repository
 public interface RatingRepository extends CrudRepository<Rating,Long> {
 
-    List<Rating> findAll();
-@Query("SELECT r FROM Ratings r WHERE r.rating LIKE %:rating%")
-    List<Rating> findByRating(@Param("rating") RatingEnum rating);
+    /*@Query("SELECT r FROM Rating r WHERE r. LIKE rating%")
+    Optional<Rating> findByRating(@Param("rating") RatingEnum rating);*/
 
-    DoubleStream findByBookId(Long id);
+    @Query("SELECT r FROM Rating r WHERE r.book.id = :id")
+    Optional<Rating> findByBookId(@Param("id") Long id);
+
+    @Query("SELECT r FROM Rating r WHERE r.user.id = :id")
+    Optional<Rating> findByUserId(@Param("id") Long id);
 }
