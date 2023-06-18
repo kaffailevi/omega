@@ -40,6 +40,5 @@ public class Rating {
     @Column
     private LocalDate date;
 
-    public Rating(Long id, RatingEnum rating, String reviewTitle, String review, LocalDate date) {
-    }
+
 }

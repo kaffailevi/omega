@@ -12,13 +12,13 @@ public class UserConverter {
     }
 
     public static final User convertToEntity(UserTO to) {
-        return new User(to.getId(), to.getFirstName(), to.getLastName(), to.getEmail(), to.getPhone(), null, to.getOccupation(), null
+        return new User(to.getId(),null, to.getFirstName(), to.getLastName(), to.getEmail(), to.getPhone(), null, to.getOccupation(),null,null
         );
     }
 
     public static final User convertToEntity(UserCTO to) {
         return new User(to.getId(), to.getPassword(), to.getFirstName(), to.getLastName(), to.getEmail(), to.getPhone(), null, to.getOccupation()
-        ,null);
+        ,null,null);
     }
 
 }

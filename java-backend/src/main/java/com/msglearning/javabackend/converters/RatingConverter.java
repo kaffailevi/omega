@@ -18,6 +18,8 @@ public class RatingConverter {
     public static final Rating convertToEntity(RatingTO ratingTO){
         return new Rating(
                 ratingTO.getId(),
+                null,
+                null,
                 ratingTO.getRating(),
                 ratingTO.getReview_title(),
                 ratingTO.getReview(),
