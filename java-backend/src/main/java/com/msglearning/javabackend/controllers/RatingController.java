@@ -11,7 +11,7 @@ import java.util.Optional;
 @RequestMapping({ControllerConstants.API_PATH_RATING})
 public class RatingController {
     public static final String USER_ID_PATH = "/userId/{userId}";
-    public static final String BOOK_ID_PATH = "/movieId/{movieId}";
+    public static final String BOOK_ID_PATH = "/bookId/{bookId}";
     public static final String SAVE_PATH = "/save";
     public static final String DELETE_PATH = "/delete/{ratingId}";
 
