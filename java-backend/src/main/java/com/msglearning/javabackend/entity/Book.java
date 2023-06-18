@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,15 +19,17 @@ public class Book {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column
-    private String subTitle;
+    @Column(name = "subtitle")
+    private String subtitle;
     @Column(nullable = false)
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "coverImage")
-    private String coverImage;
-    @Column
-    private Double rating;
+    @Column(name = "bookCover")
+    private String bookCover;
+    @Column(name = "is_available")
+    private boolean isAvailable;
+    @OneToMany(mappedBy = "book")
+    List<Borrow> borrowList;
 
 }

@@ -1,10 +1,13 @@
 package com.msglearning.javabackend.services;
 
+import com.msglearning.javabackend.converters.BookConverter;
 import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.repositories.BookRepository;
+import com.msglearning.javabackend.to.BookTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,16 +16,18 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public Book save(Book book) throws Exception{
-        return bookRepository.save(book);
+    public Book save(BookTO bookTO) throws Exception{
+        return bookRepository.save(BookConverter.convertToEntity(bookTO));
     }
 
-    public List<Book> findAll() {
+    public List<BookTO> findAll() {
         List<Book> books = bookRepository.findAll();
         if (books.isEmpty())
             return Collections.emptyList();
 
-        return books.stream().collect(Collectors.toList());
+        return books.stream()
+                .map(BookConverter::convertToTO)
+                .collect(Collectors.toList());
     }
 
     public List<Book> findByAuthor(String author)
@@ -52,4 +57,27 @@ public class BookService {
         return bookRepository.findCoverImageById(id);
     }
 
+    @Transactional
+    public void deleteById(Long id) {
+        //not working because of foreign key constrain
+        bookRepository.deleteById(id);}
+
+    public boolean update (BookTO book){
+        Optional<Book> opBook =  bookRepository.findById(book.getId());
+        opBook.ifPresent(
+
+                updatedBook -> {
+                    updatedBook.setTitle(book.getTitle());
+                    updatedBook.setSubtitle(book.getSubTitle());
+                    updatedBook.setAuthor(book.getAuthor());
+                    updatedBook.setAvailable(book.isAvailable());
+                    updatedBook.setBookCover(book.getCoverImage());
+                    updatedBook.setPublishingHouse(book.getPublishingHouse());
+                    bookRepository.save(updatedBook);
+                }
+
+
+        );
+    return opBook.isPresent();
+    }
 }

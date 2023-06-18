@@ -1,6 +1,7 @@
 package com.msglearning.javabackend.controllers;
 
 import com.msglearning.javabackend.entity.User;
+import com.msglearning.javabackend.exceptions.InvalidDataException;
 import com.msglearning.javabackend.services.PasswordService;
 import com.msglearning.javabackend.services.Tokenservice;
 import com.msglearning.javabackend.services.UserService;
@@ -31,11 +32,12 @@ public class AuthController {
     Tokenservice tokenService;
 
     @PostMapping(REGISTER_PATH)
-    public boolean register(@RequestBody UserCTO userTO) {
+    public boolean register(@RequestBody UserCTO userTO) throws Exception {
 
         try {
             userService.save(userTO);
-        } catch (Exception e) {
+        } catch (InvalidDataException e) {
+            System.out.println(e.toString());
             return false;
         }
 

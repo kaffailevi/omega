@@ -18,7 +18,7 @@ public class User {
     static final String TABLE_NAME = "user";
 
 
-    public User(Long id, String firstName, String lastName, String email, String phone, String profileImage, String occupation, List<Stuff> stuffList) {
+    public User(Long id, String firstName, String lastName, String email, String phone, String profileImage, String occupation, List<Borrow> borrowList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,7 +26,7 @@ public class User {
         this.phone = phone;
         this.profileImage = profileImage;
         this.occupation = occupation;
-        this.stuffList = stuffList;
+        this.borrowList = borrowList;
     }
 
     @Id
@@ -56,7 +56,7 @@ public class User {
     @Column
     private String occupation;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Stuff> stuffList;
+    @OneToMany(mappedBy = "user")
+    private List<Borrow> borrowList;
 
 }
