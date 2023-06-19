@@ -30,6 +30,7 @@ public class BookController {
     private static final String COVER_IMAGE_PATH = "/cover/{id}";
     private static final String DELETE_PATH = "/delete/{id}";
     private static final String UPDATE_PATH = "/update";
+    private static final String CATEGORY_PATH = "/category/{category}";
 
 
     @Autowired
@@ -91,5 +92,10 @@ public class BookController {
         boolean res = bookService.update(bookTO);
         System.out.println(res);
         return res;
+    }
+
+    @GetMapping(CATEGORY_PATH)
+    public List<BookTO> getBooksByCategory(@PathVariable String category){
+        return bookService.findBookByCategory(category).stream().map(BookConverter::convertToTO).collect(Collectors.toList());
     }
 }
