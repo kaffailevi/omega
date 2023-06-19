@@ -7,7 +7,6 @@ import com.msglearning.javabackend.to.BookTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,14 +56,11 @@ public class BookService {
         return bookRepository.findCoverImageById(id);
     }
 
-    @Transactional
     public void deleteById(Long id) {
-        //not working because of foreign key constrain
         bookRepository.deleteById(id);}
 
     public void update (BookTO book){
         bookRepository.findById(book.getId()).ifPresent(
-
                 updatedBook -> {
                     updatedBook.setTitle(book.getTitle());
                     updatedBook.setSubTitle(book.getSubTitle());
@@ -74,9 +70,6 @@ public class BookService {
                     updatedBook.setPublishingHouse(book.getPublishingHouse());
                     bookRepository.save(updatedBook);
                 }
-
-
         );
-        System.out.println(bookRepository.findById(book.getId()).isPresent());
     }
 }
