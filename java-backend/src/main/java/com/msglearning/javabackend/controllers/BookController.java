@@ -21,6 +21,7 @@ import static com.msglearning.javabackend.controllers.ControllerConstants.*;
 
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_BOOK})
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
     private static final String ALL_PATH = "/all";
     private static final String ID_PATH = "/id/{id}";

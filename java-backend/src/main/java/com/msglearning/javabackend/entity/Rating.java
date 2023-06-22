@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name = Rating.TABLE_NAME)
 public class Rating {
 
-    static final String TABLE_NAME = "rating";
+    static final String TABLE_NAME = "ratings";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

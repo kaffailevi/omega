@@ -11,6 +11,7 @@ public class BookConverter {
 
     public static final Book convertToEntity(BookTO to) {
         return new Book(to.getId(), to.getTitle(), to.getSubTitle(),
-                to.getAuthor(), to.getPublishingHouse(), to.getCoverImage(), to.getCategory(), to.isAvailable(),null);
+                to.getAuthor(), to.getPublishingHouse(), to.getCoverImage(), to.getCategory(), to.isAvailable(),null,null);
     }
+
 }

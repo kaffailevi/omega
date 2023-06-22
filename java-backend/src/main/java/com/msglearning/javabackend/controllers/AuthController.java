@@ -19,6 +19,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_AUTH })
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     private static final String REGISTER_PATH = "/register";

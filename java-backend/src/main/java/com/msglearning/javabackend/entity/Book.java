@@ -35,4 +35,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     List<Borrow> borrowList;
 
+    @OneToMany(mappedBy = "book")
+    List<Rating> ratingList;
 }

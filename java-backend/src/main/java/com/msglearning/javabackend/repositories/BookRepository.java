@@ -26,7 +26,8 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     @Query("SELECT b FROM Book b WHERE b.publishingHouse LIKE %:publishingHouse%")
     List<Book> findByPublishingHouse(@Param("publishingHouse") String publishingHouse);
 
-    Optional<Book> findById(Long id);
+    @Query("SELECT b from Book b WHERE b.id = :id")
+    Optional<Book> findById(@Param("id") Long id);
 
     @Query("SELECT b.coverImage FROM Book b WHERE b.id = :id")
     Optional<String> findCoverImageById(@Param("id") Long id);
@@ -35,5 +36,6 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     @Query("DELETE FROM Book b WHERE b.id= :id")
     void deleteById(@Param("id") Long id);
 
-    List<Book> findBookByCategory(String category);
+    @Query("SELECT b FROM Book b Where b.category like :category")
+    List<Book> findBookByCategory(@Param("category") String category);
 }
