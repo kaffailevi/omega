@@ -58,7 +58,7 @@ public class User {
     private String occupation;
 
     @Column
-    private  boolean isManager;
+    private  Boolean isManager;
 
     @OneToMany(mappedBy = "user")
     private List<Borrow> borrowList;

@@ -81,7 +81,7 @@ public class UserController {
     @GetMapping(ISMANAGER_PATH)
     public boolean isUserManager(@PathVariable Long id){
         Optional<User> user = userService.findById(id);
-        if ( user != null && user.get().isManager()){
+        if ( user != null && user.get().getIsManager()){
             return true;
         }
 
