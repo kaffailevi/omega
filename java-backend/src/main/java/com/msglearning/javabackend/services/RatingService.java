@@ -30,8 +30,14 @@ public class RatingService {
 
     public Boolean save(RatingTO ratingTO){
         Rating rating= RatingConverter.convertToEntity(ratingTO);
-        rating.setUser(userRepository.findById(ratingTO.getUser_id()).get());
-        rating.setBook(bookRepository.findById(ratingTO.getBook_id()).get());
+        Optional<User> opUser = userRepository.findById(ratingTO.getUser_id());
+        Optional<Book> opBook = bookRepository.findById(ratingTO.getBook_id());
+        if(!opBook.isPresent() || !opUser.isPresent())
+        {
+            return false;
+        }
+        rating.setUser(opUser.get());
+        rating.setBook(opBook.get());
         //rating.setDate(LocalDate.now());
         if(!validateUser(rating.getUser())){
             return false;

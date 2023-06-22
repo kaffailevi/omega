@@ -1,10 +1,17 @@
 package com.msglearning.javabackend.controllers;
 
+import com.msglearning.javabackend.converters.RatingConverter;
+import com.msglearning.javabackend.entity.Book;
+import com.msglearning.javabackend.entity.Rating;
+import com.msglearning.javabackend.entity.User;
+import com.msglearning.javabackend.services.BookService;
 import com.msglearning.javabackend.services.RatingService;
+import com.msglearning.javabackend.services.UserService;
 import com.msglearning.javabackend.to.RatingTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -17,6 +24,10 @@ public class RatingController {
 
     @Autowired
     RatingService ratingService;
+    @Autowired
+    BookService bookService;
+    @Autowired
+    UserService userService;
     @GetMapping(BOOK_ID_PATH)
     public Optional<RatingTO> getByBookId(@PathVariable Long book_id){
         return ratingService.findByBookId(book_id);
@@ -25,7 +36,7 @@ public class RatingController {
     public Optional<RatingTO> getByUserId(@PathVariable Long user_id){
         return ratingService.findByUserId(user_id);
     }
-    @GetMapping(SAVE_PATH)
+    @PostMapping(SAVE_PATH)
     public Boolean save(@RequestBody RatingTO ratingTO){
         return ratingService.save(ratingTO);
     }
@@ -33,4 +44,7 @@ public class RatingController {
     public Boolean delete(@PathVariable Long ratingId) {
         return ratingService.deleteById(ratingId);
     }
+
+
+
 }
