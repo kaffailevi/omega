@@ -23,6 +23,7 @@ public class UserTO implements Serializable {
 
     private String occupation;
 
+
     @Override
     public String toString() {
         return "UserTO{" +

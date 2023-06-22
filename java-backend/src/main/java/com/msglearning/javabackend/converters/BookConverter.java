@@ -6,11 +6,11 @@ import com.msglearning.javabackend.to.BookTO;
 public class BookConverter {
     public static final BookTO convertToTO(Book entity) {
         return new BookTO(entity.getId(), entity.getTitle(), entity.getSubTitle(),
-                entity.getAuthor(), entity.getPublishingHouse(), entity.getCoverImage(), entity.isAvailable());
+                entity.getAuthor(), entity.getPublishingHouse(), entity.getCoverImage(), entity.getCategory(), entity.isAvailable());
     }
 
     public static final Book convertToEntity(BookTO to) {
         return new Book(to.getId(), to.getTitle(), to.getSubTitle(),
-                to.getAuthor(), to.getPublishingHouse(), to.getCoverImage(), to.isAvailable(),null);
+                to.getAuthor(), to.getPublishingHouse(), to.getCoverImage(), to.getCategory(), to.isAvailable(),null);
     }
 }

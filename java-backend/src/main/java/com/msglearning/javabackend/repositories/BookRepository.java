@@ -35,4 +35,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     @Query("DELETE FROM Book b WHERE b.id= :id")
     void deleteById(@Param("id") Long id);
 
+    List<Book> findBookByCategory(String category);
 }

@@ -1,6 +1,7 @@
 package com.msglearning.javabackend.repositories;
 
 import com.msglearning.javabackend.entity.User;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,7 @@ public interface UserRepository extends CrudRepository<User, Long > {
     @Query("SELECT u.profileImage FROM User u WHERE u.id = :id")
     Optional<String> findProfileImageById(@Param("id") Long id);
 
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.id = :id")
+    void deleteById(@Param("id") Long id);
 }

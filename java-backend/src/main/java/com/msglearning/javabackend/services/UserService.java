@@ -9,6 +9,7 @@ import com.msglearning.javabackend.to.UserTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,12 +73,14 @@ public class UserService {
         return userRepository.findProfileImageById(userId);
     }
 
+
+
     public List<User> getGmailUsers() {
         List<User> allUsers = userRepository.findAll();
 
         return allUsers.stream()
-                    .filter(u -> u.getEmail().endsWith("gmail.com"))
-                    .collect(Collectors.toList());
+                .filter(u -> u.getEmail().endsWith("gmail.com"))
+                .collect(Collectors.toList());
 
     }
 
@@ -107,4 +110,11 @@ public class UserService {
                 stream().collect(Collectors.groupingBy(User::getOccupation));
         return toReturn;
     }
+
+    @Transactional
+    public void deleteById(Long id){
+        userRepository.deleteById(id);
+    }
+
+
 }

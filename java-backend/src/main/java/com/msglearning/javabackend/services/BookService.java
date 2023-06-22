@@ -57,6 +57,9 @@ public class BookService {
         return bookRepository.findCoverImageById(id);
     }
 
+    public List<Book> findBookByCategory(String category)
+    {return bookRepository.findBookByCategory(category);}
+
     @Transactional
     public void deleteById(Long id) {
         //not working because of foreign key constrain

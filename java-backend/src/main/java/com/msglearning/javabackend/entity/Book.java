@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = Book.TABLE_NAME)
 public class Book {
     static final String TABLE_NAME = "book";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +26,10 @@ public class Book {
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "cover_image")
+    @Column(name = "coverImage")
     private String coverImage;
+    @Column
+    private String category;
     @Column(name = "is_available")
     private boolean isAvailable;
     @OneToMany(mappedBy = "book")
