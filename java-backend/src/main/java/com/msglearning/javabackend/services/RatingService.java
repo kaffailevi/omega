@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,13 +93,13 @@ public class RatingService {
         }
         return true;
     }
-    public Optional<RatingTO> findByBookId(Long id){
-        return ratingRepository.findByBookId(id)
-                .map(RatingConverter::convertToTO);
+    public List<RatingTO> findByBookId(Long id){
+        return ratingRepository.findByBookId(id).stream()
+                .map(RatingConverter::convertToTO).collect(Collectors.toList());
     }
-    public Optional<RatingTO> findByUserId(Long id) {
-        return ratingRepository.findByUserId(id)
-                .map(RatingConverter::convertToTO);
+    public List<RatingTO> findByUserId(Long id) {
+        return ratingRepository.findByUserId(id).stream()
+                .map(RatingConverter::convertToTO).collect(Collectors.toList());
     }
 
 }

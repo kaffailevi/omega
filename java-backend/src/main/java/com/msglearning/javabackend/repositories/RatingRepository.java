@@ -18,8 +18,8 @@ public interface RatingRepository extends CrudRepository<Rating,Long> {
     Optional<Rating> findByRating(@Param("rating") RatingEnum rating);*/
 
     @Query("SELECT r FROM Rating r WHERE r.book.id = :id")
-    Optional<Rating> findByBookId(@Param("id") Long id);
+    List<Rating> findByBookId(@Param("id") Long id);
 
     @Query("SELECT r FROM Rating r WHERE r.user.id = :id")
-    Optional<Rating> findByUserId(@Param("id") Long id);
+    List<Rating> findByUserId(@Param("id") Long id);
 }
