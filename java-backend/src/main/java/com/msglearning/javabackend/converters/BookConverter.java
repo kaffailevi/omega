@@ -5,8 +5,8 @@ import com.msglearning.javabackend.to.BookTO;
 
 public class BookConverter {
     public static final BookTO convertToTO(Book entity) {
-        return new BookTO(entity.getId(), entity.getTitle(), entity.getSubtitle(),
-                entity.getAuthor(), entity.getPublishingHouse(), entity.getBookCover(), entity.isAvailable());
+        return new BookTO(entity.getId(), entity.getTitle(), entity.getSubTitle(),
+                entity.getAuthor(), entity.getPublishingHouse(), entity.getCoverImage(), entity.isAvailable());
     }
 
     public static final Book convertToEntity(BookTO to) {

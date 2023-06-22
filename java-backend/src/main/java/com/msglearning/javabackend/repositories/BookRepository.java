@@ -17,7 +17,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     List<Book> findAll();
 
-    @Query("SELECT b FROM Book b WHERE b.title LIKE %:token% or b.subtitle LIKE %:token% ")
+    @Query("SELECT b FROM Book b WHERE b.title LIKE %:token% or b.subTitle LIKE %:token% ")
     List<Book> findByTitle(@Param("token") String token);
 
     @Query("SELECT b FROM Book b where b.author LIKE %:author%")
@@ -28,7 +28,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     Optional<Book> findById(Long id);
 
-    @Query("SELECT b.bookCover FROM Book b WHERE b.id = :id")
+    @Query("SELECT b.coverImage FROM Book b WHERE b.id = :id")
     Optional<String> findCoverImageById(@Param("id") Long id);
 
     @Modifying

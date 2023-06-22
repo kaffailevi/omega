@@ -19,14 +19,14 @@ public class Book {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(name = "subtitle")
-    private String subtitle;
+    @Column(name = "sub_title")
+    private String subTitle;
     @Column(nullable = false)
     private String author;
     @Column
     private String publishingHouse;
-    @Column(name = "bookCover")
-    private String bookCover;
+    @Column(name = "cover_image")
+    private String coverImage;
     @Column(name = "is_available")
     private boolean isAvailable;
     @OneToMany(mappedBy = "book")
