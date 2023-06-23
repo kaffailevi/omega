@@ -26,6 +26,7 @@ import java.util.zip.DataFormatException;
 
 import static com.msglearning.javabackend.controllers.ControllerConstants.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_BORROW})
 public class BorrowController {

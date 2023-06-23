@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.msglearning.javabackend.controllers.ControllerConstants.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_BOOK})
 public class BookController {

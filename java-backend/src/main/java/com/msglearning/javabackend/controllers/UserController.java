@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_USER })
 public class UserController {
@@ -25,15 +26,11 @@ public class UserController {
     private static final String NAME_PATH = "/name/{name}";
     private static final String PROFILE_IMAGE = "/image/{id}";
 
-
-
     @Autowired
     UserService userService;
 
     @Autowired
     Tokenservice tokenService;
-
-
 
     @Autowired
     private Environment env;
@@ -72,7 +69,5 @@ public class UserController {
         String profileImageStoragePlace = env.getProperty("profileimage.path");
         return imageService.read(profileImageStoragePlace +"\\"+imageNameOpt.get());
     }
-
-
 
 }

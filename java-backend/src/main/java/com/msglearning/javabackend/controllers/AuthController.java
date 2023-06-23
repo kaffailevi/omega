@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_AUTH })
 public class AuthController {
@@ -62,9 +63,15 @@ public class AuthController {
         if (userOpt.isPresent() && PasswordService.checkPassword(pw, userOpt.get().getPassword())) {
 
             // Create token
-
-            return this.tokenService.createTokenHeader(userOpt.get().getEmail(), "USER"); // can be further extended to other roles
+            if(userOpt.get().getIsManager()) {
+                return this.tokenService.createTokenHeader(userOpt.get().getFirstName(), "ADMIN");
+            }
+            else{
+                return this.tokenService.createTokenHeader(userOpt.get().getFirstName(), "USER");
+            }
         }
+
+
 
         return "Forbidden";
 
