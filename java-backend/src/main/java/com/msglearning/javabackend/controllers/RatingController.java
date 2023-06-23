@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_RATING})
 @CrossOrigin(origins = "http://localhost:4200")
