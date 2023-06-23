@@ -19,4 +19,6 @@ public class UserCTO extends UserTO implements Serializable {
         super(id, firstName, lastName, email, phone, occupation);
         this.password = password;
     }
+
+
 }

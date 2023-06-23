@@ -14,6 +14,7 @@ public class BookTO {
     private String author;
     private String publishingHouse;
     private String coverImage;
+    private String category;
     private boolean isAvailable;
 
     @Override
@@ -25,7 +26,15 @@ public class BookTO {
                 ", author='" + author + '\'' +
                 ", publishingHouse='" + publishingHouse + '\'' +
                 ", coverImage='" + coverImage + '\'' +
+                ", category'" + category + '\'' +
                 ", is_available=" + isAvailable +
                 '}';
+    }
+
+
+
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

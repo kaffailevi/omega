@@ -57,6 +57,9 @@ public class BookService {
         return bookRepository.findCoverImageById(id);
     }
 
+    public List<Book> findBookByCategory(String category)
+    {return bookRepository.findBookByCategory(category);}
+
     @Transactional
     public void deleteById(Long id) {
         //not working because of foreign key constrain
@@ -68,10 +71,10 @@ public class BookService {
 
                 updatedBook -> {
                     updatedBook.setTitle(book.getTitle());
-                    updatedBook.setSubtitle(book.getSubTitle());
+                    updatedBook.setSubTitle(book.getSubTitle());
                     updatedBook.setAuthor(book.getAuthor());
                     updatedBook.setAvailable(book.isAvailable());
-                    updatedBook.setBookCover(book.getCoverImage());
+                    updatedBook.setCoverImage(book.getCoverImage());
                     updatedBook.setPublishingHouse(book.getPublishingHouse());
                     bookRepository.save(updatedBook);
                 }

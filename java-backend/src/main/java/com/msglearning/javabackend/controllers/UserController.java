@@ -4,6 +4,7 @@ import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.services.ImageService;
 import com.msglearning.javabackend.services.Tokenservice;
 import com.msglearning.javabackend.services.UserService;
+import com.msglearning.javabackend.to.UserCTO;
 import com.msglearning.javabackend.to.UserTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_USER })
 public class UserController {
@@ -25,12 +25,20 @@ public class UserController {
     private static final String EMAIL_PATH = "/email/{email}";
     private static final String NAME_PATH = "/name/{name}";
     private static final String PROFILE_IMAGE = "/image/{id}";
+    private static final String ISMANAGER_PATH = "id/{id}/is-manager";
+    private static final String DELETE_PATH = "/id/{id}/delete";
+
+    private static final String NEW_PATH = "/new";
+
+
 
     @Autowired
     UserService userService;
 
     @Autowired
     Tokenservice tokenService;
+
+
 
     @Autowired
     private Environment env;
@@ -69,5 +77,20 @@ public class UserController {
         String profileImageStoragePlace = env.getProperty("profileimage.path");
         return imageService.read(profileImageStoragePlace +"\\"+imageNameOpt.get());
     }
+
+    @GetMapping(ISMANAGER_PATH)
+    public boolean isUserManager(@PathVariable Long id){
+        Optional<User> user = userService.findById(id);
+        if ( user != null && user.get().getIsManager()){
+            return true;
+        }
+
+        return false;
+    }
+
+    @DeleteMapping(DELETE_PATH)
+    public void deleteUser(@PathVariable Long id){userService.deleteById(id);
+    }
+
 
 }

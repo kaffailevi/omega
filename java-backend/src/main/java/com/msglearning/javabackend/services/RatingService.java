@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +31,14 @@ public class RatingService {
 
     public Boolean save(RatingTO ratingTO){
         Rating rating= RatingConverter.convertToEntity(ratingTO);
-        rating.setUser(userRepository.findById(ratingTO.getUser_id()).get());
-        rating.setBook(bookRepository.findById(ratingTO.getBook_id()).get());
+        Optional<User> opUser = userRepository.findById(ratingTO.getUser_id());
+        Optional<Book> opBook = bookRepository.findById(ratingTO.getBook_id());
+        if(!opBook.isPresent() || !opUser.isPresent())
+        {
+            return false;
+        }
+        rating.setUser(opUser.get());
+        rating.setBook(opBook.get());
         //rating.setDate(LocalDate.now());
         if(!validateUser(rating.getUser())){
             return false;
@@ -86,13 +93,13 @@ public class RatingService {
         }
         return true;
     }
-    public Optional<RatingTO> findByBookId(Long id){
-        return ratingRepository.findByBookId(id)
-                .map(RatingConverter::convertToTO);
+    public List<RatingTO> findByBookId(Long id){
+        return ratingRepository.findByBookId(id).stream()
+                .map(RatingConverter::convertToTO).collect(Collectors.toList());
     }
-    public Optional<RatingTO> findByUserId(Long id) {
-        return ratingRepository.findByUserId(id)
-                .map(RatingConverter::convertToTO);
+    public List<RatingTO> findByUserId(Long id) {
+        return ratingRepository.findByUserId(id).stream()
+                .map(RatingConverter::convertToTO).collect(Collectors.toList());
     }
 
 }

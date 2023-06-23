@@ -10,10 +10,12 @@ import java.util.Date;
 
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@CrossOrigin(origins = "http://localhost:4200")
 public class Tokenservice {
 
     private Logger LOG = LoggerFactory.getLogger(this.getClass().getName());

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -18,7 +17,8 @@ public class User {
     static final String TABLE_NAME = "user";
 
 
-    public User(Long id, String firstName, String lastName, String email, String phone, String profileImage, String occupation, List<Borrow> borrowList) {
+
+    public User(Long id, String firstName, String lastName, String email, String phone, String profileImage, String occupation, boolean isManager, List<Borrow> borrowList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +27,7 @@ public class User {
         this.profileImage = profileImage;
         this.occupation = occupation;
         this.borrowList = borrowList;
+        this.isManager = isManager;
     }
 
     @Id
@@ -55,6 +56,9 @@ public class User {
 
     @Column
     private String occupation;
+
+    @Column
+    private  Boolean isManager;
 
     @OneToMany(mappedBy = "user")
     private List<Borrow> borrowList;
