@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_AUTH })
 @CrossOrigin(origins = "http://localhost:4200")
