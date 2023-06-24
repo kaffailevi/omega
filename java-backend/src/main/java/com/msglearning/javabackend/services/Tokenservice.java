@@ -37,8 +37,8 @@ public class Tokenservice {
      * 		- the role of the user
      * @return the generated token
      */
-    public String createTokenHeader(final String email, final String role){
-        String token = this.createJWT(ID, email, role, 21600000L);
+    public String createTokenHeader(final Long id,final String email, final String role){
+        String token = this.createJWT(id.toString(), email, role, 21600000L);
         return TOKEN_PREFIX + token + TOKEN_SUFFIX;
     }
 
@@ -96,10 +96,15 @@ public class Tokenservice {
         return claimsBody.get(NAME).toString();
     }
 
+    public  String getId(String token){
+        Jws<Claims> claims = Jwts.parser().setSigningKey(base64SecretBytes).parseClaimsJws(token);
+        Claims claimsBody = claims.getBody();
+        return claimsBody.get(ID).toString();
+    }
     private void logClaims(Claims claimsBody, StringBuilder toLog) {
         String separator = System.getProperty("line.separator");
         toLog.append(separator);
-        toLog.append("ID: " + claimsBody.getId() + separator);
+        toLog.append("ID: " + claimsBody.get(ID) + separator);
         toLog.append("Name: " + claimsBody.get(NAME) + separator);
         toLog.append("Role: " + claimsBody.get(ROLE) + separator);
         toLog.append("Expiration: " + claimsBody.getExpiration() + separator);
@@ -113,5 +118,10 @@ public class Tokenservice {
         }
         return null;
     }
+
+
+
+
+
 
 }

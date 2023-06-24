@@ -64,10 +64,10 @@ public class AuthController {
 
             // Create token
             if(userOpt.get().getIsManager()) {
-                return this.tokenService.createTokenHeader(userOpt.get().getFirstName(), "ADMIN");
+                return this.tokenService.createTokenHeader(userOpt.get().getId(),userOpt.get().getFirstName(), "ADMIN");
             }
             else{
-                return this.tokenService.createTokenHeader(userOpt.get().getFirstName(), "USER");
+                return this.tokenService.createTokenHeader(userOpt.get().getId(),userOpt.get().getFirstName(), "USER");
             }
         }
 
@@ -76,5 +76,8 @@ public class AuthController {
         return "Forbidden";
 
     }
+
+
+
 
 }

@@ -33,31 +33,10 @@ public class RatingService {
         Rating rating= RatingConverter.convertToEntity(ratingTO);
         Optional<User> opUser = userRepository.findById(ratingTO.getUser_id());
         Optional<Book> opBook = bookRepository.findById(ratingTO.getBook_id());
-        if(!opBook.isPresent() || !opUser.isPresent())
-        {
+        if(!opUser.isPresent() || !opBook.isPresent())
             return false;
-        }
         rating.setUser(opUser.get());
         rating.setBook(opBook.get());
-        //rating.setDate(LocalDate.now());
-        if(!validateUser(rating.getUser())){
-            return false;
-        }
-        if(!validateBook(rating.getBook())){
-            return false;
-        }
-        if (!validateRating(rating.getRating())){
-            return false;
-        }
-        if (!validateReviewTitle(rating.getReview_title())){
-            return false;
-        }
-        if(!validateReview(rating.getReview())){
-            return true;
-        }
-        if(!validateDate(rating.getDate())){
-            return true;
-        }
         ratingRepository.save(rating);
         return true;
     }

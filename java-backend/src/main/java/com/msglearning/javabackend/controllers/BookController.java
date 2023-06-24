@@ -76,7 +76,7 @@ public class BookController {
         return imageService.read(coverImageStorageSpace +"\\"+imageNameOpt.get());
     }
     @PostMapping(SAVE_PATH)
-    public boolean saveBook(@RequestBody BookTO bookTO) {
+    public Boolean saveBook(@RequestBody BookTO bookTO) {
         try {
             bookService.save(bookTO);
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class BookController {
     public void deleteBook(@PathVariable Long id){ bookService.deleteById(id); }
 
     @PutMapping(UPDATE_PATH)
-    public boolean updateBook(@RequestBody BookTO bookTO){
+    public Boolean updateBook(@RequestBody BookTO bookTO){
         boolean res = bookService.update(bookTO);
         System.out.println(res);
         return res;
