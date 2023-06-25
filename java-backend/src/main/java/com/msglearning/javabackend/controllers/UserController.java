@@ -1,5 +1,6 @@
 package com.msglearning.javabackend.controllers;
 
+import com.msglearning.javabackend.converters.UserConverter;
 import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.services.ImageService;
 import com.msglearning.javabackend.services.Tokenservice;
@@ -17,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping({ ControllerConstants.API_PATH_USER })
+@RequestMapping({ControllerConstants.API_PATH_USER})
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     private static final String ALL_PATH = "/all";
@@ -28,16 +30,12 @@ public class UserController {
     private static final String ISMANAGER_PATH = "id/{id}/is-manager";
     private static final String DELETE_PATH = "/id/{id}/delete";
 
-    private static final String NEW_PATH = "/new";
-
-
 
     @Autowired
     UserService userService;
 
     @Autowired
     Tokenservice tokenService;
-
 
 
     @Autowired
@@ -53,8 +51,11 @@ public class UserController {
 
 
     @GetMapping(ID_PATH)
-    public Optional<User> getById(@PathVariable Long id) {
-        return userService.findById(id);
+    public UserTO getById(@PathVariable Long id) {
+        Optional<User> opUser = userService.findById(id);
+        if (opUser.isPresent())
+            return UserConverter.convertToTO(opUser.get());
+        return null;
     }
 
     @GetMapping(EMAIL_PATH)
@@ -70,18 +71,18 @@ public class UserController {
     @GetMapping(value = PROFILE_IMAGE, produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody
     byte[] getProfileImage(@PathVariable Long id) throws IOException {
-        Optional<String> imageNameOpt= userService.getProfileImage(id);
+        Optional<String> imageNameOpt = userService.getProfileImage(id);
         if (imageNameOpt.isEmpty()) {
             return new byte[0];
         }
         String profileImageStoragePlace = env.getProperty("profileimage.path");
-        return imageService.read(profileImageStoragePlace +"\\"+imageNameOpt.get());
+        return imageService.read(profileImageStoragePlace + "\\" + imageNameOpt.get());
     }
 
     @GetMapping(ISMANAGER_PATH)
-    public boolean isUserManager(@PathVariable Long id){
+    public boolean isUserManager(@PathVariable Long id) {
         Optional<User> user = userService.findById(id);
-        if ( user != null && user.get().getIsManager()){
+        if (user != null && user.get().getIsManager()) {
             return true;
         }
 
@@ -89,10 +90,9 @@ public class UserController {
     }
 
     @DeleteMapping(DELETE_PATH)
-    public void deleteUser(@PathVariable Long id){userService.deleteById(id);
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
     }
-
-
 
 
 }

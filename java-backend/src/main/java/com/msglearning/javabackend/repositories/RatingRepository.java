@@ -17,7 +17,7 @@ public interface RatingRepository extends CrudRepository<Rating,Long> {
     /*@Query("SELECT r FROM Rating r WHERE r. LIKE rating%")
     Optional<Rating> findByRating(@Param("rating") RatingEnum rating);*/
 
-    @Query("SELECT r FROM Rating r WHERE r.book.id = :id")
+    @Query("SELECT r FROM Rating r WHERE r.book.id = :id ORDER BY r.date DESC ")
     List<Rating> findByBookId(@Param("id") Long id);
 
     @Query("SELECT r FROM Rating r WHERE r.user.id = :id")
