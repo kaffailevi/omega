@@ -4,6 +4,7 @@ import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.services.ImageService;
 import com.msglearning.javabackend.services.Tokenservice;
 import com.msglearning.javabackend.services.UserService;
+import com.msglearning.javabackend.to.BookTO;
 import com.msglearning.javabackend.to.UserCTO;
 import com.msglearning.javabackend.to.UserTO;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_USER })
 public class UserController {
@@ -27,18 +29,15 @@ public class UserController {
     private static final String PROFILE_IMAGE = "/image/{id}";
     private static final String ISMANAGER_PATH = "id/{id}/is-manager";
     private static final String DELETE_PATH = "/id/{id}/delete";
+    private static final String UPDATE_PATH="/update";
 
     private static final String NEW_PATH = "/new";
-
-
 
     @Autowired
     UserService userService;
 
     @Autowired
     Tokenservice tokenService;
-
-
 
     @Autowired
     private Environment env;
@@ -92,7 +91,11 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){userService.deleteById(id);
     }
 
-
-
+    @PutMapping(UPDATE_PATH)
+    public Boolean updateUser(@RequestBody UserTO userTO){
+        boolean res = userService.update(userTO);
+        System.out.println(res);
+        return res;
+    }
 
 }

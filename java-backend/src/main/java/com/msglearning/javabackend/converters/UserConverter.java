@@ -8,7 +8,7 @@ public class UserConverter {
 
     public static final UserTO convertToTO(User entity) {
         return new UserTO(entity.getId(), entity.getFirstName(),
-                entity.getLastName(), entity.getEmail(), entity.getPhone(), entity.getOccupation());
+                entity.getLastName(), entity.getEmail(), entity.getPhone(), entity.getOccupation(), entity.getProfileImage(), entity.getIsManager());
     }
 
     public static final User convertToEntity(UserTO to) {

@@ -1,9 +1,11 @@
 package com.msglearning.javabackend.services;
 
 import com.msglearning.javabackend.converters.UserConverter;
+import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.exceptions.InvalidDataException;
 import com.msglearning.javabackend.repositories.UserRepository;
+import com.msglearning.javabackend.to.BookTO;
 import com.msglearning.javabackend.to.UserCTO;
 import com.msglearning.javabackend.to.UserTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,5 +118,19 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
+    public boolean update (UserTO user){
+        Optional<User> opUser =  userRepository.findById(user.getId());
+        opUser.ifPresent(
+                updatedUser -> {
+                    updatedUser.setFirstName(user.getFirstName());
+                    updatedUser.setLastName(user.getLastName());
+                    updatedUser.setPhone(user.getPhone());
+                    updatedUser.setEmail(user.getEmail());
+                    updatedUser.setIsManager(user.getIsManager());
+                    updatedUser.setProfileImage(user.getProfileImage());
+                    userRepository.save(updatedUser);
+                }
+        );
+        return opUser.isPresent();
+    }
 }

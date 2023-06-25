@@ -23,6 +23,9 @@ public class UserTO implements Serializable {
 
     private String occupation;
 
+    private String profileImage;
+
+    private Boolean isManager;
 
     @Override
     public String toString() {
