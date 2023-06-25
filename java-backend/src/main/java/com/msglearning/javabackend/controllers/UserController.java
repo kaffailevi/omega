@@ -4,8 +4,6 @@ import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.services.ImageService;
 import com.msglearning.javabackend.services.Tokenservice;
 import com.msglearning.javabackend.services.UserService;
-import com.msglearning.javabackend.to.BookTO;
-import com.msglearning.javabackend.to.UserCTO;
 import com.msglearning.javabackend.to.UserTO;
 
 import org.springframework.beans.factory.annotation.Autowired;

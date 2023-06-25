@@ -1,11 +1,9 @@
 package com.msglearning.javabackend.services;
 
 import com.msglearning.javabackend.converters.UserConverter;
-import com.msglearning.javabackend.entity.Book;
 import com.msglearning.javabackend.entity.User;
 import com.msglearning.javabackend.exceptions.InvalidDataException;
 import com.msglearning.javabackend.repositories.UserRepository;
-import com.msglearning.javabackend.to.BookTO;
 import com.msglearning.javabackend.to.UserCTO;
 import com.msglearning.javabackend.to.UserTO;
 import org.springframework.beans.factory.annotation.Autowired;
