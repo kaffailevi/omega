@@ -37,6 +37,7 @@ public class RatingService {
             return false;
         rating.setUser(opUser.get());
         rating.setBook(opBook.get());
+
         ratingRepository.save(rating);
         return true;
     }
