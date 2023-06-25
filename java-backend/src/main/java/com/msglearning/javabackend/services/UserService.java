@@ -116,5 +116,19 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
+    public boolean update (UserTO user){
+        Optional<User> opUser =  userRepository.findById(user.getId());
+        opUser.ifPresent(
+                updatedUser -> {
+                    updatedUser.setFirstName(user.getFirstName());
+                    updatedUser.setLastName(user.getLastName());
+                    updatedUser.setPhone(user.getPhone());
+                    updatedUser.setEmail(user.getEmail());
+                    updatedUser.setIsManager(user.getIsManager());
+                    updatedUser.setProfileImage(user.getProfileImage());
+                    userRepository.save(updatedUser);
+                }
+        );
+        return opUser.isPresent();
+    }
 }

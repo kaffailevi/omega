@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class UserCTO extends UserTO implements Serializable {
 
     String password;
-    public UserCTO(Long id, String firstName, String lastName, String email, String phone, String occupation) {
-        super(id, firstName, lastName, email, phone, occupation);
+    public UserCTO(Long id, String firstName, String lastName, String email, String phone, String occupation, String profileImage, Boolean isManager) {
+        super(id, firstName, lastName, email, phone, occupation, profileImage, isManager);
     }
 
-    public UserCTO(Long id, String firstName, String lastName, String email, String phone, String occupation, String password) {
-        super(id, firstName, lastName, email, phone, occupation);
+    public UserCTO(Long id, String firstName, String lastName, String email, String phone, String occupation, String password, String profileImage, Boolean isManager) {
+        super(id, firstName, lastName, email, phone, occupation, profileImage, isManager);
         this.password = password;
     }
 
