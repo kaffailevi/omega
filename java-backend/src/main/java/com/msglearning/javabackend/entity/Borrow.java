@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.Local;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @AllArgsConstructor
@@ -26,10 +28,12 @@ public class Borrow {
 
     @ManyToOne
     @JoinColumn(name = "book_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Book book;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column

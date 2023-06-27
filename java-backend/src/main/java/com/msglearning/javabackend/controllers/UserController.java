@@ -19,6 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping({ControllerConstants.API_PATH_USER})
 @CrossOrigin(origins = "http://localhost:4200")
+
 public class UserController {
 
     private static final String ALL_PATH = "/all";
