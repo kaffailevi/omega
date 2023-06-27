@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.PushBuilder;
 import java.io.IOException;
+import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class BorrowController {
     private static final String DELETE_PATH = "/delete/{id}";
 
     private static final String UPDATE_PATH = "/update";
+    private static final String SOONER_RETURN_BY_BOOK_ID = "/book_id/{id}";
 
     // private static final LocalDate BORROW_DATE = LocalDate.parse("/borrow_date/{localdate}");
 
@@ -134,6 +136,13 @@ public class BorrowController {
         LocalDate refDate = BorrowController.checkDate(reffDate);
         return borrowService.findAllByReturnDateLessThan(refDate);
 
+    }
+    @GetMapping(SOONER_RETURN_BY_BOOK_ID)
+    public BorrowTO getAllByReturnDateLessThan(@PathVariable Long id) throws DataFormatException{
+       Optional<BorrowTO> op = borrowService.findSoonestByBookId(id);
+       if(op.isPresent())
+        return op.get();
+       return null;
     }
 
     @PostMapping(NEW_PATH)

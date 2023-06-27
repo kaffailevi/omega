@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BorrowRepository extends JpaRepository<Borrow, Long> {
+public interface BorrowRepository extends CrudRepository<Borrow, Long> {
 
     List<Borrow> findAll();
 
@@ -29,6 +29,8 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
 
     @Query("SELECT b FROM Borrow b where b.returnDate < :reffDate")
     List<Borrow> findAllByReturnDateLessThan(@Param("reffDate") LocalDate reffDate);
+
+
 
     //List<Borrow> findAllByReturnDate();
 

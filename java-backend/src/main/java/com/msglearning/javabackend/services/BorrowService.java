@@ -102,4 +102,14 @@ public class BorrowService {
         return optionalBorrow.isPresent();
     }
 
+    public Optional<BorrowTO> findSoonestByBookId(Long id) {
+         List<BorrowTO> borrowTOs = borrowRepository.findAllByBookId(id).stream().map(BorrowConverter::convertToTO).collect(Collectors.toList());
+
+         return borrowTOs.stream().max(new Comparator<BorrowTO>() {
+             @Override
+             public int compare(BorrowTO o1, BorrowTO o2) {
+                 return o1.getReturnDate().compareTo(o2.getReturnDate());
+             }
+         });
+    }
 }
