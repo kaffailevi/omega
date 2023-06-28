@@ -1,83 +1,153 @@
 package com.msglearning.javabackend.repositories;
 
 import com.msglearning.javabackend.entity.Book;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-@DataJpaTest
-@AutoConfigureTestDatabase
+
+@SpringBootTest
 class BookRepositoryTest {
+
     @Autowired
-    private BookRepository bookRepository;
+    private BookRepository underTest;
     @Test
-    void itShouldFindById(){
-        BookRepository bookRepositoryMock = Mockito.mock(BookRepository.class);
+    void itShouldFindAll() {
+        // Arrange
+        List<Book> expectedBooks = Arrays.asList(new Book(), new Book(), new Book());
+        underTest.saveAll(expectedBooks);
 
-        //given
-        Book bookTest = new Book();
-        bookTest.setId(1L);
-        bookTest.setTitle("A Song of Ice and Fire");
-        bookTest.setSubTitle("A Clash of Kings");
-        bookTest.setAuthor("George R. R. Martin");
-        bookTest.setPublishingHouse("HarperCollins Publishers UK");
-        bookTest.setCoverImage("https://m.media-amazon.com/images/I/91Nl6NuijHL._AC_UF1000,1000_QL80_.jpg");
-        bookTest.setAvailable(true);
+        // Act
+        List<Book> actualBooks = underTest.findAll();
 
-        when(bookRepositoryMock.findById(anyLong())).thenReturn(Optional.of(bookTest));
-
-        Optional<Book> actualBookOptional = bookRepositoryMock.findById(1L);
-
-        assertEquals(Optional.of(bookTest), actualBookOptional);
+        // Assert
+        assertEquals(expectedBooks.size(), actualBooks.size());
     }
 
     @Test
-    void itShouldFindByTitle(){
+    void shouldFindByTitle() {
 
+        Book book = new Book();
+        book.setTitle("The Great Gatsby");
+        underTest.save(book);
+
+
+        Book foundBook = (Book) underTest.findByTitle("The Great Gatsby");
+
+
+        assertEquals("The Great Gatsby", foundBook.getTitle());
+    }
+
+    @Test
+    void shouldFindByAuthor() {
 
         Book book1 = new Book();
-        book1.setTitle("A Song of Ice and Fire");
-        book1.setSubTitle("A Clash of Kings");
-        book1.setAuthor("George R. R. Martin");
-        book1.setPublishingHouse("HarperCollins Publishers UK");
-        book1.setCoverImage("https://m.media-amazon.com/images/I/91Nl6NuijHL._AC_UF1000,1000_QL80_.jpg");
-        book1.setAvailable(true);
-        bookRepository.save(book1);
+        book1.setAuthor("Jane Austen");
+        underTest.save(book1);
 
         Book book2 = new Book();
-        book2.setTitle("A Song of Ice and Fire");
-        book2.setSubTitle("A Game of Thrones");
-        book2.setAuthor("George R. R. Martin");
-        book2.setPublishingHouse("HarperCollins Publishers UK");
-        book2.setCoverImage("https://m.media-amazon.com/images/I/91Nl6NuijHL._AC_UF1000,1000_QL80_.jpg");
-        book2.setAvailable(true);
-        bookRepository.save(book2);
+        book2.setAuthor("Emily Bronte");
+        underTest.save(book2);
 
-        Book book3 = new Book();
-        book3.setTitle("The Lord of the Rings");
-        book3.setSubTitle("The Fellowship of the Ring");
-        book3.setAuthor("J.R.R. Tolkien");
-        book3.setPublishingHouse("Some Publisher");
-        book3.setCoverImage("https://m.media-amazon.com/images/I/91Nl6NuijHL._AC_UF1000,1000_QL80_.jpg");
-        book3.setAvailable(true);
-        bookRepository.save(book3);
 
-        // Perform the findByTitle operation
-        List<Book> foundBooks = bookRepository.findByTitle("A Song of Ice and Fire");
+        List<Book> foundBooks = underTest.findByAuthor("Jane Austen");
 
-        assertEquals(2, foundBooks.size());
 
-        assertEquals("A Song of Ice and Fire", foundBooks.get(0).getTitle());
-        assertEquals("A Song of Ice and Fire", foundBooks.get(1).getTitle());
+        assertEquals(1, foundBooks.size());
+
+
+        assertEquals("Jane Austen", foundBooks.get(0).getAuthor());
+    }
+
+    @Test
+    void shouldFindByPublishingHouse() {
+
+        Book book1 = new Book();
+        book1.setPublishingHouse("Penguin Books");
+        underTest.save(book1);
+
+        Book book2 = new Book();
+        book2.setPublishingHouse("HarperCollins");
+        underTest.save(book2);
+
+
+        List<Book> foundBooks = underTest.findByPublishingHouse("Penguin Books");
+
+
+        assertEquals(1, foundBooks.size());
+
+
+        assertEquals("Penguin Books", foundBooks.get(0).getPublishingHouse());
+    }
+
+
+    @Test
+    void shouldFindById() {
+
+        Book book = new Book();
+        book.setTitle("Sample Book");
+        book.setAuthor("John Doe");
+        book.setPublishingHouse("Sample Publishing");
+        underTest.save(book);
+
+
+        Long bookId = book.getId();
+
+
+        Optional<Book> foundBook = underTest.findById(bookId);
+
+
+        assertTrue(foundBook.isPresent());
+
+
+        assertEquals(bookId, foundBook.get().getId());
+
+
+        assertEquals("Sample Book", foundBook.get().getTitle());
+
+
+        assertEquals("John Doe", foundBook.get().getAuthor());
+
+
+        assertEquals("Sample Publishing", foundBook.get().getPublishingHouse());
+    }
+
+    @Test
+    void shouldFindCoverImageById() {
+
+    }
+
+    @Test
+    void shouldDeleteById() {
+
+        Book book = new Book();
+        book.setTitle("Sample Book");
+        book.setAuthor("John Doe");
+        book.setPublishingHouse("Sample Publishing");
+        underTest.save(book);
+
+
+        Long bookId = book.getId();
+
+
+        underTest.deleteById(bookId);
+
+
+        Book deletedBook = underTest.findById(bookId).orElse(null);
+
+
+        assertNull(deletedBook);
+    }
+
+    @Test
+    @Disabled
+    void findBookByCategory() {
     }
 }
